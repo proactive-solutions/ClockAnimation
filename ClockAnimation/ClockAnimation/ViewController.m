@@ -79,7 +79,6 @@
 
 
 @interface ViewController ()
-@property (nonatomic, weak) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, strong) ClockFace *clockFace;
 @end
 
@@ -96,11 +95,6 @@
     
     //set default time
     self.clockFace.time = [NSDate date];
-}
-
-- (IBAction)setTime
-{
-    self.clockFace.time = self.datePicker.date;
 }
 
 - (void)didReceiveMemoryWarning {

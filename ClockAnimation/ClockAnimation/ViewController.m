@@ -30,34 +30,50 @@
 - (id)init
 {
     if ((self = [super init]))
-    {
+	if (self == nil) { return nil; }
+	
         self.bounds = CGRectMake(0, 0, 200, 200);
         self.path = [UIBezierPath bezierPathWithOvalInRect:self.bounds].CGPath;
         self.fillColor = [UIColor whiteColor].CGColor;
         self.strokeColor = [UIColor blackColor].CGColor;
         self.lineWidth = 4;
         
-        self.hourHand = [CAShapeLayer layer];
-        self.hourHand.path = [UIBezierPath bezierPathWithRect:CGRectMake(-2, -70, 4, 70)].CGPath;
-        self.hourHand.fillColor = [UIColor blackColor].CGColor;
-        self.hourHand.position = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+		self.hourHand = [self createHourHand];
         [self addSublayer:self.hourHand];
         
-        self.minuteHand = [CAShapeLayer layer];
-        self.minuteHand.path = [UIBezierPath bezierPathWithRect:CGRectMake(-1, -90, 2, 90)].CGPath;
-        self.minuteHand.fillColor = [UIColor blackColor].CGColor;
-        self.minuteHand.position = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+        self.minuteHand = [self createMinuteHand];
         [self addSublayer:self.minuteHand];
         
-        self.secondHand = [CAShapeLayer layer];
-        self.secondHand.path = [UIBezierPath bezierPathWithRect:CGRectMake(-1, -90, .8, 90)].CGPath;
-        self.secondHand.fillColor = [UIColor blackColor].CGColor;
-        self.secondHand.position = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+        self.secondHand = [self createSecondHand];
         [self addSublayer:self.secondHand];
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(_updateTime) userInfo:nil repeats:YES];
-    }
+	
     return self;
+}
+
+- (CAShapeLayer *)createHourHand {
+	CAShapeLayer *layer = [CAShapeLayer layer];
+	layer.path = [UIBezierPath bezierPathWithRect:CGRectMake(-2, -70, 4, 70)].CGPath;
+	layer.fillColor = [UIColor blackColor].CGColor;
+	layer.position = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+	return layer;
+}
+
+- (CAShapeLayer *)createMinuteHand {
+	CAShapeLayer *layer = [CAShapeLayer layer];
+	layer.path = [UIBezierPath bezierPathWithRect:CGRectMake(-1, -90, 2, 90)].CGPath;
+	layer.fillColor = [UIColor blackColor].CGColor;
+	layer.position = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+	return layer;
+}
+
+- (CAShapeLayer *)createSecondHand {
+	CAShapeLayer *layer = [CAShapeLayer layer];
+	layer.path = [UIBezierPath bezierPathWithRect:CGRectMake(-1, -90, .8, 90)].CGPath;
+	layer.fillColor = [UIColor blackColor].CGColor;
+	layer.position = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+	return layer;
 }
 
 - (void)_updateTime {
